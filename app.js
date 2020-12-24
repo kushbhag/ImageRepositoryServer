@@ -20,7 +20,9 @@ app.use((req, res, next) => {
 });
 
 const imageRouter = require("./api/routes/image");
+const userRouter = require("./api/routes/user");
 
 app.use('/image', imageRouter);
+app.use('/user', userRouter);
 
 module.exports = app;

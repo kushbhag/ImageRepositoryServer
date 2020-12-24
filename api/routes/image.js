@@ -2,7 +2,6 @@ const express = require("express");
 const mongoose = require("mongoose");
 const multer = require('multer');
 
-
 const router = express.Router();
 const Image = require("../models/image");
 
