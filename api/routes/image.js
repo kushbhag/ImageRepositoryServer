@@ -33,7 +33,6 @@ router.post("/", upload.single('imageUpload'), (req, res, next) => {
         _id: new mongoose.Types.ObjectId,
         name: req.body.name,
         path: req.file.path,
-        price: req.body.price
     });
     image.save().then(result =>{
         // console.log(result);
@@ -49,7 +48,7 @@ router.post("/", upload.single('imageUpload'), (req, res, next) => {
 
 router.get("/", (req, res, next) => {
     Image.find()
-        .select('name price path')
+        .select('name path')
         .exec()
         .then(images => {
             const response = {
@@ -57,7 +56,6 @@ router.get("/", (req, res, next) => {
                 images: images.map(image => {
                   return {
                     name: image.name,
-                    price: image.price,
                     path: image.path,
                     _id: image._id,
                     request: {
@@ -77,7 +75,7 @@ router.get("/", (req, res, next) => {
 router.get("/:imageId", (req, res, next) => {
     const id = req.params.imageId;
     Image.findById(id)
-        .select('name price path')
+        .select('name path')
         .exec()
         .then(image => {
             // console.log(image);
