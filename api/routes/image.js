@@ -61,7 +61,7 @@ router.get("/", (req, res, next) => {
                     _id: image._id,
                     request: {
                       type: "GET",
-                      url: "http://localhost:3000/image/"
+                      url: "/image/"
                     }
                   };
                 })
@@ -85,7 +85,7 @@ router.get("/:imageId", (req, res, next) => {
                     image: image,
                     request: {
                         type: "GET",
-                        url: "http://localhost:3000/image/" + image._id
+                        url: "/image/" + image._id
                     }
                 });
             } else {
