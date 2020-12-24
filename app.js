@@ -3,13 +3,7 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 
 mongoose.connect(
-    "mongodb+srv://"
-        +process.env.MONGO_USERNAME
-        +":"
-        +process.env.MONGO_PASSWORD
-        +"@"
-        +process.env.MONGO_DB
-        +".bivcf.mongodb.net/image-repository?retryWrites=true&w=majority",
+    "mongodb+srv://"+process.env.MONGO_USERNAME+":"+process.env.MONGO_PASSWORD+"@image-respository.bivcf.mongodb.net/image-repository?retryWrites=true&w=majority",
     {
         useNewUrlParser: true
     }

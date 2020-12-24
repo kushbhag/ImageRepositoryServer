@@ -23,9 +23,10 @@ const fileFilter = (req, file, cb) => {
     }
 }
 
-const upload = multer({storage: storage});
-
-
+const upload = multer({
+    storage: storage,
+    fileFilter: fileFilter
+});
 
 router.post("/", upload.single('imageUpload'), (req, res, next) => {
     const image = new Image ({
