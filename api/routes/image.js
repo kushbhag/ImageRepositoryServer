@@ -48,7 +48,6 @@ router.post("/", upload.single('imageUpload'), (req, res, next) => {
 
 router.get("/", (req, res, next) => {
     Image.find()
-        .select('name path')
         .exec()
         .then(images => {
             const response = {
@@ -76,7 +75,6 @@ router.get("/", (req, res, next) => {
 router.get("/:imageId", (req, res, next) => {
     const id = req.params.imageId;
     Image.findById(id)
-        .select('name path')
         .exec()
         .then(image => {
             // console.log(image);
