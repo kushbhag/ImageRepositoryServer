@@ -32,6 +32,7 @@ router.post("/", upload.single('imageUpload'), (req, res, next) => {
         _id: new mongoose.Types.ObjectId,
         name: req.body.name,
         path: req.file.path,
+        userId: req.body.userId
     });
     image.save().then(result =>{
         // console.log(result);
@@ -57,6 +58,7 @@ router.get("/", (req, res, next) => {
                     name: image.name,
                     path: image.path,
                     _id: image._id,
+                    userId: image.userId,
                     request: {
                       type: "GET",
                       url: "/image/"

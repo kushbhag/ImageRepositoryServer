@@ -43,7 +43,8 @@ router.post("/login", async (req, res, next) => {
         if (await bcrypt.compare(req.body.password, user.password)) {
             res.status(201).json({
                 firstName: user.firstName,
-                lastName: user.lastName
+                lastName: user.lastName,
+                _id: user._id
             });
         } else {
             res.status(401).send("Invalid Password")
@@ -51,6 +52,31 @@ router.post("/login", async (req, res, next) => {
     } catch {
         res.status(500).send();
     }
-})
+});
+
+router.get("/:userId", (req, res, next) => {
+    const id = req.params.userId;
+    User.findById(id)
+        .exec()
+        .then(user => {
+            if (user) {
+                res.status(200).json({
+                    user: {
+                        firstName: user.firstName,
+                        lastName: user.lastName
+                    },
+                    request: {
+                        type: "GET",
+                        url: "/user/" + id
+                    }
+                });
+            } else {
+                res.status(404).json({message: "Not found"});
+            }
+        })
+        .catch(err => {
+            res.status(500).json({error: err});
+        });
+});
 
 module.exports = router;
