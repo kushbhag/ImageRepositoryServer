@@ -23,7 +23,10 @@ router.post("/", async (req, res, next) => {
             // console.log(result);
             res.status(200).json({
                 message: 'POST new user',
-                user: user
+                user: {
+                    firstName: user.firstName,
+                    lastName: user.lastName
+                }
             });
         }).catch(err => {
             // console.log(err);
