@@ -25,7 +25,8 @@ router.post("/", async (req, res, next) => {
                 message: 'POST new user',
                 user: {
                     firstName: user.firstName,
-                    lastName: user.lastName
+                    lastName: user.lastName,
+                    _id: user._id
                 }
             });
         }).catch(err => {

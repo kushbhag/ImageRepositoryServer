@@ -4,6 +4,7 @@ const imageSchema = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
     path: { type: String, required: true},
     name: { type: String, required: true},
+    public: { type: Boolean, required: true },
     userId: mongoose.Schema.Types.ObjectId
 });
 

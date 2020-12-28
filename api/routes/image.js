@@ -32,6 +32,7 @@ router.post("/", upload.single('imageUpload'), (req, res, next) => {
         _id: new mongoose.Types.ObjectId,
         name: req.body.name,
         path: req.file.path,
+        public: req.body.public,
         userId: req.body.userId
     });
     image.save().then(result =>{
@@ -47,7 +48,7 @@ router.post("/", upload.single('imageUpload'), (req, res, next) => {
 });
 
 router.get("/", (req, res, next) => {
-    Image.find()
+    Image.find({ public: true })
         .exec()
         .then(images => {
             const response = {
@@ -56,6 +57,7 @@ router.get("/", (req, res, next) => {
                   return {
                     name: image.name,
                     path: image.path,
+                    public: image.public,
                     _id: image._id,
                     userId: image.userId,
                     request: {
@@ -92,6 +94,34 @@ router.get("/:imageId", (req, res, next) => {
         })
         .catch(err =>{
             // console.error(err);
+            res.status(500).json({error: err});
+        });
+});
+
+router.get("/user/:userId", (req, res, next) => {
+    const id = req.params.userId;
+    Image.find({ userId: id })
+        .exec()
+        .then(images => {
+            const response = {
+                count: images.length,
+                images: images.map(image => {
+                  return {
+                    name: image.name,
+                    path: image.path,
+                    public: image.public,
+                    _id: image._id,
+                    userId: image.userId,
+                    request: {
+                      type: "GET",
+                      url: "/image/"
+                    }
+                  };
+                })
+              };
+            res.status(200).json(response);
+        })
+        .catch(err => {
             res.status(500).json({error: err});
         });
 });
