@@ -6,6 +6,7 @@ const cors = require("cors");
 mongoose.connect(
     "mongodb+srv://"+process.env.MONGO_USERNAME+":"+process.env.MONGO_PASSWORD+"@image-respository.bivcf.mongodb.net/image-repository?retryWrites=true&w=majority",
     {
+        useUnifiedTopology: true,
         useNewUrlParser: true
     }
 );

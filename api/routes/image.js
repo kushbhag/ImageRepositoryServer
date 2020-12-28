@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const multer = require('multer');
+const fs = require('fs');
 
 const router = express.Router();
 const Image = require("../models/image");
@@ -10,7 +11,7 @@ const storage = multer.diskStorage({
         cb(null, './images/');
     },
     filename: function(req, file, cb) {
-        cb(null, file.originalname);
+        cb(null, Date.now().toLocaleString()+file.originalname);
     }
 });
 
@@ -126,16 +127,27 @@ router.get("/user/:userId", (req, res, next) => {
         });
 });
 
-router.delete("/:imageId", (req, res, next) => {
-    const id = req.params.imageId;
-    Image.remove({
-        _id: id
-    }).exec()
-      .then(r => res.status(200).json(r))
-      .catch(err => {
-          console.log(err);
-          res.status(500).json({error: err});
-      });
+router.delete("/:imageId/:userId", (req, res, next) => {
+    const imageId = req.params.imageId;
+    const userId = req.params.userId;
+    Image.findById(imageId)
+        .exec()
+        .then(image => {
+            if (image.userId != userId) return res.status(401).send();
+            Image.deleteOne({
+                _id: imageId,
+                userId: userId
+            }).exec()
+              .then(r => {
+                  fs.unlinkSync(image.path);
+                  res.status(200).json(r)
+              })
+              .catch(err => {
+                  console.log(err);
+                  res.status(500).json({error: err});
+              });
+        })
+    
 });
 
 module.exports = router;
