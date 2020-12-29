@@ -1,7 +1,8 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const multer = require('multer');
-const fs = require('fs');
+const fs = require("fs");
+const jwt = require("jsonwebtoken");
 
 const router = express.Router();
 const Image = require("../models/image");
@@ -28,7 +29,7 @@ const upload = multer({
     fileFilter: fileFilter
 });
 
-router.post("/", upload.single('imageUpload'), (req, res, next) => {
+router.post("/", authenticateToken, upload.single('imageUpload'), (req, res, next) => {
     const image = new Image ({
         _id: new mongoose.Types.ObjectId,
         name: req.body.name,
@@ -127,13 +128,13 @@ router.get("/user/:userId", (req, res, next) => {
         });
 });
 
-router.delete("/:imageId/:userId", (req, res, next) => {
+router.delete("/:imageId/:userId", authenticateToken, (req, res, next) => {
     const imageId = req.params.imageId;
     const userId = req.params.userId;
     Image.findById(imageId)
         .exec()
         .then(image => {
-            if (image.userId != userId) return res.status(401).send();
+            if (req.user._id != userId) return res.status(401).send();
             Image.deleteOne({
                 _id: imageId,
                 userId: userId
@@ -149,5 +150,17 @@ router.delete("/:imageId/:userId", (req, res, next) => {
         })
     
 });
+
+function authenticateToken(req, res, next) {
+    const header = req.headers['authorization'];
+    const token =  header && header.split(' ')[1];
+    if (token == null) return res.status(401).send();
+
+    jwt.verify(token, process.env.ACCESS_TOKEN, (err, user) => {
+        if (err) return res.status(403).send();
+        req.user = user;
+        next();
+    });
+}
 
 module.exports = router;
