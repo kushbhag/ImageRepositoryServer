@@ -17,7 +17,8 @@ router.get("/:userId", (req, res, next) => {
                 res.status(200).json({
                     user: {
                         firstName: user.firstName,
-                        lastName: user.lastName
+                        lastName: user.lastName,
+                        _id: user._id
                     },
                     request: {
                         type: "GET",

@@ -53,25 +53,14 @@ router.post("/login", async (req, res, next) => {
             const refreshToken = new Refresh({
                 refreshToken: message.refreshToken
             });
-            //console.log(message.refreshToken);
-            console.log(generateRefreshToken({ test: "test"}));
-            console.log(generateRefreshToken({ test: "test"}));
-            Refresh.exists({ refreshToken: message.refreshToken })
-                    .then((r) => {
-                        if (!r) {
-                            refreshToken.save()
-                                .then(result => {
-                                    res.status(201).json(message);
-                                })
-                                .catch(err => {
-                                    // console.log(err);
-                                    return res.status(500).json({error: err});
-                                });
-                        }
-                    })
-                    .catch(err => {
-                        res.status(500).json({error: err});
-                    })
+            refreshToken.save()
+                .then(result => {
+                    res.status(201).json(message);
+                })
+                .catch(err => {
+                    // console.log(err);
+                    return res.status(500).json({error: err});
+                });
         } else {
             res.status(401).send("Invalid Password")
         }

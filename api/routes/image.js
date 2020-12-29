@@ -100,7 +100,7 @@ router.get("/:imageId", (req, res, next) => {
         });
 });
 
-router.get("/user/:userId", (req, res, next) => {
+router.get("/user/:userId", authenticateToken, (req, res, next) => {
     const id = req.params.userId;
     Image.find({ userId: id })
         .exec()
@@ -128,16 +128,14 @@ router.get("/user/:userId", (req, res, next) => {
         });
 });
 
-router.delete("/:imageId/:userId", authenticateToken, (req, res, next) => {
+router.delete("/:imageId", authenticateToken, (req, res, next) => {
     const imageId = req.params.imageId;
-    const userId = req.params.userId;
     Image.findById(imageId)
         .exec()
         .then(image => {
-            if (req.user._id != userId) return res.status(401).send();
+            if (req.user._id != image.userId) return res.status(401).send();
             Image.deleteOne({
-                _id: imageId,
-                userId: userId
+                _id: imageId
             }).exec()
               .then(r => {
                   fs.unlinkSync(image.path);
