@@ -18,6 +18,7 @@ user data that is stored within the database. The auth route is meant for login,
 <h3 align="center">Image Route</h3>
 This route makes use of a basic image object as defined below.
 
+
 **Image Object**
 | Key | Type | Description |
 |---|---|---|
@@ -40,6 +41,7 @@ This route makes use of a basic image object as defined below.
 <h3 align="center">User Route</h3>
 This route is used to send user data back to the client. It makes use of simplified user object that is shown below.
 
+
 **Simplified User Object**
 | Key | Type | Description |
 |---|---|---|
@@ -55,6 +57,7 @@ This route is used to send user data back to the client. It makes use of simplif
 ---
 <h3 align="center">Auth Route</h3>
 This route is mainly used for creating, and authenticating users. This route makes use of an auth object as described below.
+
 
 **Auth Object**
 | Key | Type | Description |
