@@ -1,6 +1,7 @@
 <h1 align="center">⚡ Image Repository Server ⚡</h1>
 This server is meant to be a backend server for an image repository. I created the front end for this server in Angular and the source code is available 
-<a href="https://github.com/kushbhag/ImageRepository">here</a>. If you would like to try the application out, you can also visit this site <a href="https://kushbhag.github.io/ImageRepository/home">here</a>.
+<a href="https://github.com/kushbhag/ImageRepository">here</a>. Full documentation on how to use the web applicaiton
+is available in that same link. If you would like to try the application out, you can also visit this site <a href="https://kushbhag.github.io/ImageRepository/home">here</a>.
 
 
 ---
