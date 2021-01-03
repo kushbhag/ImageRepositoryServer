@@ -1,18 +1,19 @@
 <h1 align="center">⚡ Image Repository Server ⚡</h1>
-This server is meant to be a backend server for an image repository. I created the front end for this server in Angular and the source code is available 
-<a href="https://github.com/kushbhag/ImageRepository">here</a>. Full documentation on how to use the web applicaiton
-is available in that same link. If you would like to try the application out, you can also visit this site <a href="https://kushbhag.github.io/ImageRepository/home">here</a>.
+This project is meant to be a backend server for an image repository. I created the front end for this API in Angular and the source code is available 
+<a href="https://github.com/kushbhag/ImageRepository">here</a>. Full documentation on how to use the web application
+is available <a href="https://github.com/kushbhag/ImageRepository">here</a>. The site was also deployed using GitHub pages and you can try the application out
+<a href="https://kushbhag.github.io/ImageRepository/home">here</a>.
 
 
 ---
 <h2>Stack</h2>
 This backend server was developed using <a href="https://nodejs.org/en/about/">Node js</a>, and then deployed on Heroku. A <a href="https://www.mongodb.com/2">MongoDB</a> database was also used to store all image, user, and auth data.
-The server itself was built using <a href="https://expressjs.com/">Expres</a>, and <a href="https://mongoosejs.com/">Mongoose</a> was used to provide the schemas for my
-entities.
+The server itself was built using <a href="https://expressjs.com/">Express</a>, and <a href="https://mongoosejs.com/">Mongoose</a> was used to provide the schemas for my
+database entities.
 
 ---
 <h2>Usage</h2>
-There are three main routes that can be accessed: '/image', '/user', and '/auth'. The image route is meant to GET, POST or DELETE images. The user route is to GET any type of
+There are three main routes for the API: '/image', '/user', and '/auth'. The image route is meant to GET, POST or DELETE images. The user route is to GET any type of
 user data that is stored within the database. The auth route is meant for login, signup and overall authentication of the user.
 
 ---
@@ -23,11 +24,11 @@ This route makes use of a basic image object as defined below.
 **Image Object**
 | Key | Type | Description |
 |---|---|---|
-| _id  | ObjectId | Used within mongoose |
-| path | string | Indicates that path to access the image |
+| _id  | ObjectId | Unique identifier provided by Mongoose |
+| path | string | Indicates that folder path to access the image |
 | name | string | The name of the image |
 | public | boolean | Indicates whether or not the image is public |
-| userId | ObjectId | The ID of the user who submitted the image |
+| userId | ObjectId | The unique identifier of the user who submitted the image |
 
 **Route Details**
 | Method | Endpoint | Usage
@@ -36,7 +37,7 @@ This route makes use of a basic image object as defined below.
 | **GET** | /image/:imageId | Get a single image object with the id matching the imageId paramater. |
 | **GET** | /image/user/:userId | Get an array of image objects that the user with userId has posted. Requires a JWT access token. |
 | **POST** | /image | Post an image. Need to provide name, image file (JPEG, JPG, or PNG), public boolean, userId, and a JWT access token. The format must be in form-data. |
-| **DELETE** | /image/:imageId | Delete the image with id imageId. Requires a JWT access token. |
+| **DELETE** | /image/:imageId | Delete the image that has the id imageId. Requires a JWT access token. |
 
 ---
 <h3 align="center">User Route</h3>
@@ -48,7 +49,7 @@ This route is used to send user data back to the client. It makes use of simplif
 |---|---|---|
 | firstName  | string | The first name of the user |
 | lastName | string | The last name of the user |
-| _id | ObjectId | The id of the user |
+| _id | ObjectId | Unique identifier of the user provided by Mongoose |
 
 **Route Details**
 | Method | Endpoint | Usage |
