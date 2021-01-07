@@ -91,7 +91,9 @@ router.delete("/logout/:refreshToken", (req, res, next) => {
     const refreshToken = req.params.refreshToken;
     Refresh.deleteOne({ refreshToken: refreshToken })
             .exec()
-            .then(t => {})
+            .then(t => {
+                return res.status(202).send();
+            })
             .catch(err => {
                 res.status(500).json({error: err});
             })
